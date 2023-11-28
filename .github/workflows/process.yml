@@ -27,7 +27,8 @@ jobs:
           status="$(echo "${response}" | jq -r '.workflow_runs[].status')"
           if grep -qE 'in_progress' <<< "${status}"; then
             echo "The bot_runner is still running, The script prevented this workflow to run to avoid conflicts... Cancelling!!"
-            exit 1
+            # Cancel Job
+            curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel"
           fi
           : "Ignore"
 

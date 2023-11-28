@@ -33,6 +33,7 @@ jobs:
 
  inits:
     runs-on: ubuntu-latest
+    if: success() && true
     steps:
       - name: "checkout"
         uses: actions/checkout@v3
